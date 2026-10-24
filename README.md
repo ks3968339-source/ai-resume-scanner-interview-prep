@@ -164,16 +164,10 @@ Once the application is deployed, replace this section with the real frontend UR
 
 ## 👨‍💻 Author
 
-**Your Name**
+Kushal Sharma
 
-- GitHub: [Your GitHub Profile](YOUR_GITHUB_PROFILE_URL)
-- LinkedIn: [Your LinkedIn Profile](YOUR_LINKEDIN_PROFILE_URL)
-
-Replace the placeholders with your actual profile links.
-
-## 📄 License
-
-Add a license only after confirming that you have the right to distribute the project's code. If this project is based on another repository, review its original license and provide appropriate attribution.
+- GitHub: https://github.com/ks3968339-source
+- LinkedIn: www.linkedin.com/in/kushal-sharma-737a09375
 
 ---
 
