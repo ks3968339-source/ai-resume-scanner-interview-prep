@@ -3,11 +3,14 @@ import "../style/home.scss"
 import { useInterview } from '../hooks/useInterview.js'
 import { useNavigate } from 'react-router'
 
+
+
 const Home = () => {
 
     const { loading, generateReport,reports } = useInterview()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
+    const [resume, setResume] = useState(null);
     const resumeInputRef = useRef()
 
     const navigate = useNavigate()
@@ -69,21 +72,69 @@ const Home = () => {
                             <h2>Your Profile</h2>
                         </div>
 
-                        {/* Upload Resume */}
-                        <div className='upload-section'>
-                            <label className='section-label'>
-                                Upload Resume
-                                <span className='badge badge--best'>Best Results</span>
-                            </label>
-                            <label className='dropzone' htmlFor='resume'>
-                                <span className='dropzone__icon'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 16 12 12 8 16" /><line x1="12" y1="12" x2="12" y2="21" /><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" /></svg>
-                                </span>
-                                <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
-                                <p className='dropzone__subtitle'>PDF or DOCX (Max 5MB)</p>
-                                <input ref={resumeInputRef} hidden type='file' id='resume' name='resume' accept='.pdf,.docx' />
-                            </label>
-                        </div>
+                        
+{/* Upload Resume */}
+<div className="upload-section">
+    <label className="section-label">
+        Upload Resume
+        <span className="badge badge--best">Best Results</span>
+    </label>
+
+    <label className="dropzone" htmlFor="resume">
+        <span className="dropzone__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="16 16 12 12 8 16" />
+                <line x1="12" y1="12" x2="12" y2="21" />
+                <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
+            </svg>
+        </span>
+
+        {resume ? (
+            <>
+                <p className="dropzone__title">{resume.name}</p>
+                <p className="dropzone__subtitle">
+                    {(resume.size / (1024 * 1024)).toFixed(2)} MB · Resume selected
+                </p>
+            </>
+        ) : (
+            <>
+                <p className="dropzone__title">Click to upload or drag &amp; drop</p>
+                <p className="dropzone__subtitle">PDF or DOCX (Max 5MB)</p>
+            </>
+        )}
+
+        <input
+            ref={resumeInputRef}
+            hidden
+            type="file"
+            id="resume"
+            name="resume"
+            accept=".pdf,.docx"
+            onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+
+                const validType = /\.(pdf|docx)$/i.test(file.name);
+
+                if (!validType) {
+                    alert("Please select a PDF or DOCX file.");
+                    e.target.value = "";
+                    return;
+                }
+
+                if (file.size > 5 * 1024 * 1024) {
+                    alert("Resume must be 5MB or smaller.");
+                    e.target.value = "";
+                    return;
+                }
+
+                setResume(file);
+            }}
+        />
+    </label>
+</div>
 
                         {/* OR Divider */}
                         <div className='or-divider'><span>OR</span></div>

@@ -82,6 +82,9 @@ async function loginUserController(req, res) {
         })
     }
 
+    console.log("JWT_SECRET loaded:", !!process.env.JWT_SECRET);
+    console.log("JWT_SECRET length:", process.env.JWT_SECRET?.length);
+
     const token = jwt.sign(
         { id: user._id, username: user.username },
         process.env.JWT_SECRET,
